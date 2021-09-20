@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import queryString from 'query-string';
 import io, { Socket } from 'socket.io-client';
+import '../styles/Chat.css';
 
 let socket: Socket;
 
@@ -40,17 +41,19 @@ const Chat: React.FC<{ location: Location }> = ({ location }) => {
 	return (
 		<div className="outerContainer">
 			<div className="container">
-				<input
+				{/* <input
 					value={message}
 					onChange={event => setMessage(event.target.value)}
 					onKeyPress={event =>
 						event.key === 'Enter' ? sendMessage(event) : null
 					}
 					type="text"
-				/>
+				/> */}
 			</div>
 		</div>
 	);
 };
 
 export default Chat;
+
+// 16.03
