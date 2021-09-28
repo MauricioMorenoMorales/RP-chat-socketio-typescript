@@ -5,7 +5,6 @@ import '../styles/Chat.css';
 import InfoBar from './InfoBar';
 import Input from './Input';
 import Messages from './messages/Messages';
-import { IMessage } from '../interfaces/message.interface';
 
 let socket: Socket;
 
@@ -16,14 +15,17 @@ const Chat: React.FC<{ location: Location }> = ({ location }) => {
 	const [messages, setMessages] = useState<any>([]); //!verify real type
 	const ENDPOINT = 'localhost:5000';
 
+	//When the component is rendered is called this function
 	useEffect(() => {
 		const { name, room } = queryString.parse(location.search);
 		socket = io(ENDPOINT);
 		setName(String(name));
 		setRoom(String(room));
-		socket.emit('join', { name, room }, () => {});
+		socket.emit('join', { name, room }, message => {
+			console.log(message);
+		});
 		return () => {
-			socket.emit('disconnect');
+			socket.disconnect();
 			socket.off();
 		};
 	}, [ENDPOINT, location.search]);
@@ -40,13 +42,13 @@ const Chat: React.FC<{ location: Location }> = ({ location }) => {
 		if (message) socket.emit('sendMessage', message, () => setMessage(''));
 	};
 
-	console.log(message, messages);
+	console.log(messages);
 
 	return (
 		<div className="outerContainer">
 			<div className="container">
 				<InfoBar room={room} />
-				<Messages messages={messages} names="string"/>
+				<Messages messages={messages} names="string" />
 				<Input
 					setMessage={setMessage}
 					sendMessage={sendMessage}
@@ -62,5 +64,3 @@ const Chat: React.FC<{ location: Location }> = ({ location }) => {
 };
 
 export default Chat;
-
-// 16.03

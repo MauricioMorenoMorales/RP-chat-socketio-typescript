@@ -27,3 +27,4 @@ module.exports.getUser = id => users.find(user => user.id === id);
 
 module.exports.getUsersInRoom = room =>
 	users.filter(user => user.room === room);
+	

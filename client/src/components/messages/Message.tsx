@@ -1,6 +1,10 @@
 import '../../styles/messages/Message.css';
 
-const Message: React.FC<any> = ({ message: { user, text }, name }) => {
+//! Remueve elementos por default
+const Message: React.FC<any> = ({
+	message: { user, text },
+	name = 'Mariana',
+}) => {
 	let isSendByCurrentUser: boolean = false;
 	const trimmedName = name.trim().toLowerCase();
 
